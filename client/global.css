@@ -1,0 +1,719 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 234 45% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 235 40% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 235 40% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 245 37% 16%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 245 30% 18%;
+    --muted-foreground: 220 12% 72%;
+
+    --accent: 172 72% 41%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 24% 22%;
+    --input: 240 24% 22%;
+    --ring: 160 84% 39%;
+    --sidebar-background: 234 45% 7%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 172 72% 41%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 24% 22%;
+    --sidebar-ring: 160 84% 39%;
+  }
+}
+
+/* Hide scrollbars for elements that opt-in */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Styled dark blue scrollbar */
+.scrollbar-blue { scrollbar-width: thin; scrollbar-color: #1e3a8a transparent; }
+.scrollbar-blue::-webkit-scrollbar { width: 8px; height: 8px; }
+.scrollbar-blue::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-blue::-webkit-scrollbar-thumb { background-color: rgba(56, 189, 248, 0.5); border-radius: 9999px; border: 2px solid transparent; background-clip: padding-box; }
+.scrollbar-blue::-webkit-scrollbar-thumb:hover { background-color: rgba(56, 189, 248, 0.7); }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* subtle utilities */
+  .glow {
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  }
+}
+
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Subtle float for cards */
+@keyframes float-y {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+.float-slow { animation: float-y 3.8s ease-in-out infinite alternate; }
+
+/* Enhanced floating animation for product cards */
+@keyframes float-3d {
+  0% { transform: translateY(0px) translateX(0px) rotate(var(--rotate-start, 0deg)); }
+  33% { transform: translateY(-8px) translateX(3px) rotate(calc(var(--rotate-start, 0deg) + 2deg)); }
+  66% { transform: translateY(4px) translateX(-2px) rotate(calc(var(--rotate-start, 0deg) - 1deg)); }
+  100% { transform: translateY(0px) translateX(0px) rotate(var(--rotate-start, 0deg)); }
+}
+.animate-float-slow { animation: float-3d 4s ease-in-out infinite; }
+
+/* Subtle site-wide background motion */
+@keyframes bg-pan-y {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4%); }
+  100% { transform: translateY(0); }
+}
+@keyframes parallax-y {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6%); }
+}
+@keyframes parallax-y-slow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3%); }
+}
+@keyframes parallax-y-slowest {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-1.5%); }
+}
+.animate-bg-pan-slow { animation: bg-pan-y 36s ease-in-out infinite; will-change: transform; }
+.animate-parallax { animation: parallax-y 48s ease-in-out infinite alternate; will-change: transform; }
+.animate-parallax-slow { animation: parallax-y-slow 60s ease-in-out infinite alternate; will-change: transform; }
+.animate-parallax-slowest { animation: parallax-y-slowest 80s ease-in-out infinite alternate; will-change: transform; }
+
+/* Utility for continuously scrolling content from right to left */
+.marquee-track {
+  will-change: transform;
+  animation: marquee-left 26s linear infinite;
+}
+
+/* Repeating square grid made with CSS gradients (no images) */
+.bg-grid {
+  --grid-size: 64px;
+  --grid-line: rgba(255, 255, 255, 0.06);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: top left;
+}
+
+/* Figma-inspired responsive grid pattern */
+.bg-grid-pattern {
+  background-image:
+    /* Vertical lines */
+    repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent calc(100vw / 24 - 1px),
+      rgba(251, 251, 251, 0.28) calc(100vw / 24 - 1px),
+      rgba(251, 251, 251, 0.28) calc(100vw / 24),
+      transparent calc(100vw / 24)
+    ),
+    /* Horizontal lines */
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 62px,
+      rgba(251, 251, 251, 0.28) 62px,
+      rgba(251, 251, 251, 0.28) 63px,
+      transparent 63px
+    );
+
+  /* Add radial gradient overlays for depth */
+  background-image:
+    radial-gradient(
+      ellipse 800px 600px at 50% 30%,
+      rgba(251, 251, 251, 0.15) 0%,
+      rgba(251, 251, 251, 0.08) 40%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 800px 600px at 50% 70%,
+      rgba(251, 251, 251, 0.12) 0%,
+      rgba(251, 251, 251, 0.06) 40%,
+      transparent 70%
+    ),
+    /* Vertical lines */
+    repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent calc(100vw / 24 - 1px),
+      rgba(251, 251, 251, 0.28) calc(100vw / 24 - 1px),
+      rgba(251, 251, 251, 0.28) calc(100vw / 24),
+      transparent calc(100vw / 24)
+    ),
+    /* Horizontal lines */
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 62px,
+      rgba(251, 251, 251, 0.28) 62px,
+      rgba(251, 251, 251, 0.28) 63px,
+      transparent 63px
+    );
+}
+
+/* Responsive adjustments for grid pattern */
+@media (max-width: 768px) {
+  .bg-grid-pattern {
+    background-image:
+      radial-gradient(
+        ellipse 400px 300px at 50% 30%,
+        rgba(251, 251, 251, 0.1) 0%,
+        rgba(251, 251, 251, 0.05) 40%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 400px 300px at 50% 70%,
+        rgba(251, 251, 251, 0.08) 0%,
+        rgba(251, 251, 251, 0.04) 40%,
+        transparent 70%
+      ),
+      /* Vertical lines - fewer on mobile */
+      repeating-linear-gradient(
+        to right,
+        transparent 0,
+        transparent calc(100vw / 12 - 1px),
+        rgba(251, 251, 251, 0.2) calc(100vw / 12 - 1px),
+        rgba(251, 251, 251, 0.2) calc(100vw / 12),
+        transparent calc(100vw / 12)
+      ),
+      /* Horizontal lines - larger spacing on mobile */
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 80px,
+        rgba(251, 251, 251, 0.2) 80px,
+        rgba(251, 251, 251, 0.2) 81px,
+        transparent 81px
+      );
+  }
+}
+
+@media (min-width: 1440px) {
+  .bg-grid-pattern {
+    background-image:
+      radial-gradient(
+        ellipse 1000px 800px at 50% 30%,
+        rgba(251, 251, 251, 0.2) 0%,
+        rgba(251, 251, 251, 0.1) 40%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 1000px 800px at 50% 70%,
+        rgba(251, 251, 251, 0.15) 0%,
+        rgba(251, 251, 251, 0.08) 40%,
+        transparent 70%
+      ),
+      /* Vertical lines - more dense on large screens */
+      repeating-linear-gradient(
+        to right,
+        transparent 0,
+        transparent calc(100vw / 32 - 1px),
+        rgba(251, 251, 251, 0.35) calc(100vw / 32 - 1px),
+        rgba(251, 251, 251, 0.35) calc(100vw / 32),
+        transparent calc(100vw / 32)
+      ),
+      /* Horizontal lines */
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 48px,
+        rgba(251, 251, 251, 0.35) 48px,
+        rgba(251, 251, 251, 0.35) 49px,
+        transparent 49px
+      );
+  }
+}
+
+/* Center-visible, side-fade mask for grid overlays (now fades on all four sides) */
+.grid-fade-center {
+  /* Fade from fully opaque center to transparent edges on both axes */
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 1) 45%,
+    rgba(0, 0, 0, 0.95) 55%,
+    rgba(0, 0, 0, 0.6) 75%,
+    rgba(0, 0, 0, 0.25) 88%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 1) 45%,
+    rgba(0, 0, 0, 0.95) 55%,
+    rgba(0, 0, 0, 0.6) 75%,
+    rgba(0, 0, 0, 0.25) 88%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Filter button laser effect */
+.filter-btn {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  border: none !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+.filter-btn .laser {
+  position: absolute;
+  left: -120%;
+  top: 0;
+  height: 100%;
+  width: 220%;
+  background: linear-gradient(90deg, rgba(16,185,129,0) 0%, rgba(16,185,129,0.18) 45%, rgba(16,185,129,0.6) 50%, rgba(16,185,129,0.18) 55%, rgba(16,185,129,0) 100%);
+  transform: translateX(0);
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 300ms;
+  pointer-events: none;
+}
+
+.filter-btn:hover .laser {
+  transform: translateX(20%);
+}
+
+/* active state: cover with solid green tint and keep laser visible */
+.filter-btn.active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16,185,129,0.12), rgba(6,95,70,0.12));
+  z-index: 0;
+}
+
+.filter-btn.active .laser {
+  background: linear-gradient(90deg, rgba(16,185,129,0) 0%, rgba(16,185,129,0.35) 40%, rgba(16,185,129,0.85) 50%, rgba(16,185,129,0.35) 60%, rgba(16,185,129,0) 100%);
+  transform: translateX(0%);
+}
+
+.filter-btn > * { position: relative; z-index: 10; }
+
+/* separators between buttons */
+.filter-btn::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 18%;
+  height: 64%;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(16,185,129,0.25), rgba(255,255,255,0.06));
+  opacity: 0.7;
+}
+
+.filter-btn:last-child::after { display: none; }
+
+/* make focus/hover outline subtle */
+.filter-btn:focus-visible {
+  outline: 2px solid rgba(16,185,129,0.12);
+  outline-offset: 2px;
+}
+
+/* Alternate filter style that doesn't force background/border (used for matching header button)
+   Keeps laser/active visual without !important overrides */
+.filter-custom {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-custom .laser {
+  position: absolute;
+  left: -120%;
+  top: 0;
+  height: 100%;
+  width: 220%;
+  background: linear-gradient(90deg, rgba(16,185,129,0) 0%, rgba(16,185,129,0.18) 45%, rgba(16,185,129,0.6) 50%, rgba(16,185,129,0.18) 55%, rgba(16,185,129,0) 100%);
+  transform: translateX(0);
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 300ms;
+  pointer-events: none;
+}
+
+.filter-custom:hover .laser {
+  transform: translateX(20%);
+}
+
+.filter-custom.active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16,185,129,0.06), rgba(6,95,70,0.06));
+  z-index: 0;
+}
+
+.filter-custom.active .laser {
+  background: linear-gradient(90deg, rgba(16,185,129,0) 0%, rgba(16,185,129,0.35) 40%, rgba(16,185,129,0.85) 50%, rgba(16,185,129,0.35) 60%, rgba(16,185,129,0) 100%);
+  transform: translateX(0%);
+}
+
+.filter-custom > * { position: relative; z-index: 10; }
+
+.filter-custom::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 18%;
+  height: 64%;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(16,185,129,0.25), rgba(255,255,255,0.06));
+  opacity: 0.7;
+}
+
+.filter-custom:last-child::after { display: none; }
+
+.filter-custom:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.06);
+  outline-offset: 2px;
+}
+
+/* Isolated filters (visual separation) */
+.isolate-filter {
+  margin-right: 0.5rem;
+  padding-right: 0.5rem;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  position: relative; /* ensure pseudo element positions correctly */
+  order: -1; /* visually move All/Best to the start of the filter row */
+}
+
+/* Add a clearer separator after the last isolate-filter in DOM */
+.isolate-filter:last-of-type::after {
+  content: "";
+  position: absolute;
+  right: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 28px;
+  width: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+/* Prevent native tap/active highlight on mobile and remove default active background */
+.filter-custom, .filter-custom * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.filter-custom:active,
+.filter-custom:focus,
+.filter-custom:focus-visible {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Also prevent the Button component from applying a yellow background on active */
+button.filter-custom:active,
+button.filter-custom:focus,
+button.filter-custom:focus-visible,
+button.isolate-filter:active,
+button.isolate-filter:focus,
+button.isolate-filter:focus-visible {
+  background-image: none !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+/* Ensure inner text gradients remain and aren't replaced by focus */
+button.filter-custom .bg-clip-text,
+button.isolate-filter .bg-clip-text {
+  -webkit-text-fill-color: initial !important;
+}
+
+/* Best Sellers slider under button (purple shimmer) */
+.best-slider {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -6px;
+  height: 4px;
+  width: 40px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 50%, #7c3aed 100%);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 180ms ease, transform 220ms ease;
+  box-shadow: 0 6px 18px rgba(124,58,237,0.12);
+  animation: purple-shift 2.2s linear infinite;
+  z-index: 12;
+}
+
+.filter-custom .best-slider,
+.isolate-filter .best-slider { position: absolute; }
+
+.filter-custom.active .best-slider,
+.isolate-filter.active .best-slider {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Animated shimmer on slider */
+.best-slider::after {
+  content: "";
+  position: absolute;
+  left: -30%;
+  top: 0;
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.0), rgba(255,255,255,0.36), rgba(255,255,255,0.0));
+  transform: translateX(0);
+  animation: slider-shimmer 1.8s linear infinite;
+  border-radius: inherit;
+}
+@keyframes slider-shimmer {
+  0%{ transform: translateX(-120%); }
+  100%{ transform: translateX(220%); }
+}
+
+/* Removed full-width best-grid-slider (disabled) */
+/* If needed later, recreate with a non-intrusive design. */
+
+/* Ensure filter buttons don't get native focus/active styling (prevent yellow) */
+button.filter-custom,
+button.isolate-filter {
+  -webkit-tap-highlight-color: transparent;
+}
+button.filter-custom:focus,
+button.filter-custom:active,
+button.filter-custom:focus-visible,
+button.isolate-filter:focus,
+button.isolate-filter:active,
+button.isolate-filter:focus-visible,
+button.filter-custom[aria-pressed="true"],
+button.isolate-filter[aria-pressed="true"] {
+  background-image: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: inherit !important;
+  --tw-ring-opacity: 0 !important;
+}
+button.filter-custom:focus-visible,
+button.isolate-filter:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Extra force to prevent default focus ring (yellow) */
+button.filter-custom,
+button.filter-custom *,
+button.isolate-filter,
+button.isolate-filter * {
+  -webkit-tap-highlight-color: transparent !important;
+}
+button.filter-custom:focus,
+button.filter-custom:active,
+button.filter-custom:focus-visible,
+button.isolate-filter:focus,
+button.isolate-filter:active,
+button.isolate-filter:focus-visible,
+button.filter-custom[aria-pressed="true"],
+button.isolate-filter[aria-pressed="true"] {
+  background-image: none !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-opacity: 0 !important;
+}
+
+/* Horizontal scroll customization when Best Sellers active */
+.best-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.best-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  position: relative;
+  padding-bottom: 8px; /* space for custom progress */
+}
+
+/* hide native scrollbar so we can draw custom progress */
+.best-scroll::-webkit-scrollbar { display: none; }
+.best-scroll { scrollbar-width: none; }
+
+/* custom progress indicator inside the scroll container */
+.best-scroll-wrapper {
+  position: relative;
+  overflow: visible;
+  padding-bottom: 28px; /* reserve space so progress doesn't overlap and cause scroll */
+}
+
+.best-scroll-progress {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 8px; /* visible below cards but inside wrapper
+                  smaller value prevents pushing page height */
+  height: 8px;
+  width: 110%; /* longer than container */
+  max-width: 1200px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 999px;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.2);
+}
+.best-scroll-progress::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--best-progress, 0) * 100%);
+  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 50%, #7c3aed 100%);
+  background-size: 200% 100%;
+  box-shadow: 0 6px 24px rgba(124,58,237,0.18);
+  transition: width 140ms linear;
+  border-radius: inherit;
+  transform-origin: left center;
+}
+.best-scroll-progress::after {
+  /* strong bright shimmer that travels across the filled portion */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 28%;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.95) 50%, rgba(255,255,255,0) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  transform: translateX(calc(-1 * (1 - var(--best-progress, 0)) * 100%));
+  animation: best-fill-shine 1.2s linear infinite;
+  border-radius: inherit;
+}
+@keyframes best-fill-shine {
+  0% { transform: translateX(calc(-1 * (1 - var(--best-progress, 0)) * 100%)); opacity: 0.6; }
+  50% { transform: translateX(calc(var(--best-progress, 0) * 100%)); opacity: 1; }
+  100% { transform: translateX(calc(1 * 100%)); opacity: 0.0; }
+}
+
+/* Best Sellers heading font */
+.best-heading {
+  font-family: 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Sliders: keep scroll inside the container */
+.best-scroll { overscroll-behavior: auto; touch-action: auto; -webkit-overflow-scrolling: touch; }
+
+/* Mobile filters panel styles and toggle behavior */
+@media (max-width: 768px) {
+  body.filters-closed aside.mobile-filters { display: none !important; }
+  body.filters-closed .grow-grid { grid-template-columns: 1fr !important; }
+  aside .sticky { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 0.5rem; }
+  aside .filter-custom { background: rgba(15,23,42,0.8) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0.5rem !important; }
+  aside .filter-custom:hover { background: rgba(15,23,42,0.95) !important; }
+}
+
+/* Dialog scrolling & webkit touch momentum */
+.dialog-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+}
+.dialog-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+.dialog-scroll::-webkit-scrollbar-track { background: transparent; }
+.dialog-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
+.dialog-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
