@@ -24,32 +24,36 @@ import { Layout } from "@/components/layout/Layout";
 
 const queryClient = new QueryClient();
 
+import { AuthProvider } from "@/hooks/useAuth";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/grow" element={<GrowGarden />} />
-            <Route path="/grow/all" element={<GrowGardenAll />} />
-            <Route path="/mm" element={<MM2 />} />
-            <Route path="/mm/all" element={<MM2All />} />
-            <Route path="/brainrot" element={<Brainrot />} />
-            <Route path="/brainrot/all" element={<BrainrotAll />} />
-            <Route path="/blox" element={<BloxFruits />} />
-            <Route path="/blox/all" element={<BloxFruitsAll />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/blade" element={<Blade />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/grow" element={<GrowGarden />} />
+              <Route path="/grow/all" element={<GrowGardenAll />} />
+              <Route path="/mm" element={<MM2 />} />
+              <Route path="/mm/all" element={<MM2All />} />
+              <Route path="/brainrot" element={<Brainrot />} />
+              <Route path="/brainrot/all" element={<BrainrotAll />} />
+              <Route path="/blox" element={<BloxFruits />} />
+              <Route path="/blox/all" element={<BloxFruitsAll />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/blade" element={<Blade />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

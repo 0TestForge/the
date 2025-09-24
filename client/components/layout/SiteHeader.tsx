@@ -6,6 +6,7 @@ import { useGeo } from "@/hooks/useGeo";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { LoginDialog } from "@/components/LoginDialog";
+import { useAuth } from "@/hooks/useAuth";
 import { ChevronDown, Gamepad2, User } from "lucide-react";
 
 export function SiteHeader() {
@@ -16,6 +17,7 @@ export function SiteHeader() {
   const override = typeof window !== "undefined" ? localStorage.getItem("currencyOverride") : null;
   const activeCurrency = override || geo.currency || "USD";
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -158,13 +160,24 @@ export function SiteHeader() {
             </PopoverContent>
           </Popover>
 
-          {/* Login Button */}
-          <LoginDialog>
-            <button className="flex items-center gap-2 h-9 px-6 bg-gradient-to-b from-[#3DFF88] to-[#259951] rounded-xl hover:from-[#34e077] hover:to-[#228a47] transition-all shadow-lg">
-              <User className="h-5 w-5 text-white" />
-              <span className="text-white font-semibold text-sm">Log in</span>
-            </button>
-          </LoginDialog>
+          {/* Auth */}
+          {user ? (
+            <div className="flex items-center gap-3">
+              <div className="h-8 px-3 rounded-lg bg-white/10 border border-white/10 text-white text-sm flex items-center">
+                {user.username}
+              </div>
+              <button onClick={logout} className="h-8 px-3 rounded-lg bg-[#0F0F0F] hover:bg-[#1a1a1a] text-white text-xs border border-white/10">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <LoginDialog>
+              <button className="flex items-center gap-2 h-9 px-6 bg-gradient-to-b from-[#3DFF88] to-[#259951] rounded-xl hover:from-[#34e077] hover:to-[#228a47] transition-all shadow-lg">
+                <User className="h-5 w-5 text-white" />
+                <span className="text-white font-semibold text-sm">Log in</span>
+              </button>
+            </LoginDialog>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -268,13 +281,24 @@ export function SiteHeader() {
                 </div>
               </div>
 
-              {/* Login Button */}
-              <LoginDialog>
-                <button className="w-full flex items-center justify-center gap-2 h-12 px-6 bg-gradient-to-b from-[#3DFF88] to-[#259951] rounded-xl hover:from-[#34e077] hover:to-[#228a47] transition-all shadow-lg">
-                  <User className="h-5 w-5 text-white" />
-                  <span className="text-white font-semibold">Log in</span>
-                </button>
-              </LoginDialog>
+              {/* Auth (mobile) */}
+              {user ? (
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex-1 h-12 px-4 rounded-xl bg-white/10 border border-white/10 text-white font-semibold flex items-center">
+                    {user.username}
+                  </div>
+                  <button onClick={logout} className="h-12 px-4 rounded-xl bg-[#0F0F0F] hover:bg-[#1a1a1a] text-white border border-white/10">
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <LoginDialog>
+                  <button className="w-full flex items-center justify-center gap-2 h-12 px-6 bg-gradient-to-b from-[#3DFF88] to-[#259951] rounded-xl hover:from-[#34e077] hover:to-[#228a47] transition-all shadow-lg">
+                    <User className="h-5 w-5 text-white" />
+                    <span className="text-white font-semibold">Log in</span>
+                  </button>
+                </LoginDialog>
+              )}
             </div>
           </div>
         </div>,

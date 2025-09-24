@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,31 +17,48 @@ export function LoginDialog({ children, defaultTab = "login" }: LoginDialogProps
   const [activeTab, setActiveTab] = useState<"login" | "register">(defaultTab);
   const [showPassword, setShowPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [regUsername, setRegUsername] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regPassword, setRegPassword] = useState("");
+  const [loginId, setLoginId] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  const { register, login } = useAuth();
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement authentication logic
-    console.log(`${activeTab} form submitted`);
+    try {
+      if (activeTab === "register") {
+        await register({ username: regUsername.trim(), email: regEmail.trim(), password: regPassword });
+        toast({ title: "Registered", description: "Welcome! You are now logged in." });
+      } else {
+        await login({ identifier: loginId.trim(), password: loginPassword });
+        toast({ title: "Logged in", description: "You are now logged in." });
+      }
+      setOpen(false);
+    } catch (err: any) {
+      toast({ title: "Error", description: err?.message || "Something went wrong" });
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-[95vw] max-w-5xl p-0 border-0 bg-transparent shadow-none max-h-[85vh] sm:max-h-[90vh] overflow-hidden">
-        <div className="relative w-full h-[85vh] sm:h-[90vh] rounded-2xl overflow-hidden bg-[#06100A] flex">
+      <DialogContent className="w-[95vw] max-w-5xl p-0 border-0 bg-transparent shadow-none max-h-[60vh] sm:max-h-[70vh] md:max-h-[75vh] lg:max-h-[80vh] overflow-hidden">
+        <div className="relative w-full h-[55vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] xl:h-[75vh] rounded-2xl overflow-hidden bg-[#06100A] flex">
           {/* Left Side - Background Image */}
           <div className="hidden lg:flex lg:w-[45%] relative overflow-hidden">
-            <div
-              className="w-full h-full bg-cover bg-center"
-              style={{
-                backgroundImage: "url('https://api.builder.io/api/v1/image/assets/TEMP/aaf8edd3e166125e1471b4f58002d87d4835de79?width=1544')",
-                transform: "rotate(90deg) scale(1.5)",
-                transformOrigin: "center"
-              }}
+            <img
+              src="https://api.builder.io/api/v1/image/assets/TEMP/aaf8edd3e166125e1471b4f58002d87d4835de79?width=1544"
+              alt="Background"
+              className="w-full h-full object-cover"
             />
-            
+
             {/* Logo Overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-start pt-20 z-10">
+            <div className="absolute inset-0 flex flex-col items-center justify-start pt-8 z-10">
               <img
                 src="https://api.builder.io/api/v1/image/assets/TEMP/7d0a42c6f2567cdd3cced28667de6b7d492f0faf?width=376"
                 alt="RO CART"
@@ -47,9 +66,9 @@ export function LoginDialog({ children, defaultTab = "login" }: LoginDialogProps
               />
             </div>
 
-            {/* Bottom Terms Text */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 px-4 z-10">
-              <p className="text-white text-sm text-center font-['Poppins'] leading-relaxed max-w-sm">
+            {/* Bottom Terms Text (inside image) */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 z-10">
+              <p className="text-white/90 text-sm text-center font-['Poppins'] leading-relaxed max-w-sm">
                 By accessing the site, I attest that I am at least 18 years old and have read the Terms and Conditions
               </p>
             </div>
@@ -114,6 +133,8 @@ export function LoginDialog({ children, defaultTab = "login" }: LoginDialogProps
                       type="text"
                       placeholder="Enter Username"
                       className="w-full h-12 bg-[#030804] border-0 rounded-md text-white placeholder:text-white/30 font-['Poppins']"
+                      value={regUsername}
+                      onChange={(e) => setRegUsername(e.target.value)}
                       required
                     />
                   </div>
@@ -127,6 +148,8 @@ export function LoginDialog({ children, defaultTab = "login" }: LoginDialogProps
                       type="email"
                       placeholder="Enter Email"
                       className="w-full h-12 bg-[#030804] border-0 rounded-md text-white placeholder:text-white/30 font-['Poppins']"
+                      value={regEmail}
+                      onChange={(e) => setRegEmail(e.target.value)}
                       required
                     />
                   </div>
@@ -141,6 +164,8 @@ export function LoginDialog({ children, defaultTab = "login" }: LoginDialogProps
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter Password"
                         className="w-full h-12 bg-[#030804] border-0 rounded-md text-white placeholder:text-white/30 font-['Poppins'] pr-12"
+                        value={regPassword}
+                        onChange={(e) => setRegPassword(e.target.value)}
                         required
                       />
                       <button
@@ -196,6 +221,8 @@ export function LoginDialog({ children, defaultTab = "login" }: LoginDialogProps
                       type="text"
                       placeholder="Enter Email or Username"
                       className="w-full h-12 bg-[#030804] border-0 rounded-md text-white placeholder:text-white/30 font-['Poppins']"
+                      value={loginId}
+                      onChange={(e) => setLoginId(e.target.value)}
                       required
                     />
                   </div>
@@ -209,6 +236,8 @@ export function LoginDialog({ children, defaultTab = "login" }: LoginDialogProps
                       type="password"
                       placeholder="Enter Password"
                       className="w-full h-12 bg-[#030804] border-0 rounded-md text-white placeholder:text-white/30 font-['Poppins']"
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
                       required
                     />
                     <div className="text-right mt-2">
